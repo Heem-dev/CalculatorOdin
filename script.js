@@ -18,7 +18,6 @@ document.querySelector(".delAll").addEventListener("click", () => {
   operatorState = false;
   decimalState = false;
   secondDecimalState = false;
-
   operator = "";
   opText = "";
   resultDisplay.textContent = "";
@@ -45,29 +44,10 @@ document.querySelector(".del").addEventListener("click", () => {
   }
   resultDisplay.textContent = arry.join("");
 });
-function add(a, b) {
-  a = parseFloat(a);
-  b = parseFloat(b);
-  return a + b;
-}
-
-function minus(a, b) {
-  a = parseFloat(a);
-  b = parseFloat(b);
-  return a - b;
-}
-
-function divide(a, b) {
-  a = parseFloat(a);
-  b = parseFloat(b);
-  return a / b;
-}
-
-function multiply(a, b) {
-  a = parseFloat(a);
-  b = parseFloat(b);
-  return a * b;
-}
+const add = (a, b) => parseFloat(a) + parseFloat(b);
+const minus = (a, b) => parseFloat(a) - parseFloat(b);
+const divide = (a, b) => parseFloat(a) / parseFloat(b);
+const multiply = (a, b) => parseFloat(a) * parseFloat(b);
 
 mainGrid.querySelectorAll(".number").forEach((e) => {
   //   console.log(e.textContent);
@@ -103,19 +83,14 @@ function operatorClicked(e) {
     if (opText == "-") {
       operator = "-";
     }
-    // resultDisplay.textContent += opText;
     updateDisplay(opText);
-    // console.log(leftNums);
   }
-  //   console.log(operator);
 }
 
 function equal() {
   if (leftBracket == true && operatorState == true) {
     let ary = resultDisplay.textContent.split("");
-    // console.log(ary);
     const indx = ary.findIndex((e) => e == opText);
-    // console.log(indx);
     ary.splice(0, indx + 1);
     rightNums = ary.join("");
     console.log(leftNums);
