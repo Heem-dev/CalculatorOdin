@@ -5,6 +5,7 @@ let rightBracket = false;
 let operatorState = false;
 let operator = "";
 let decimalState = false;
+let secondDecimalState = false;
 let opText = "";
 let leftNums;
 let rightNums;
@@ -16,6 +17,8 @@ document.querySelector(".delAll").addEventListener("click", () => {
   rightBracket = false;
   operatorState = false;
   decimalState = false;
+  secondDecimalState = false;
+
   operator = "";
   opText = "";
   resultDisplay.textContent = "";
@@ -26,6 +29,16 @@ document.querySelector(".del").addEventListener("click", () => {
   let arry = resultDisplay.textContent.split("");
   if (arry.at(-1) == opText) {
     operatorState = false;
+    arry.pop();
+  } else if (arry.at(-1) == "." && secondDecimalState == true) {
+    secondDecimalState = false;
+    arry.pop();
+  } else if (
+    arry.at(-1) == "." &&
+    secondDecimalState == false &&
+    decimalState == true
+  ) {
+    decimalState = false;
     arry.pop();
   } else {
     arry.pop();
@@ -115,6 +128,9 @@ function equal() {
         resultDisplay.textContent = multiply(leftNums, rightNums);
         break;
       case "/":
+        if (rightNums <= 0) {
+          break;
+        }
         resultDisplay.textContent = divide(leftNums, rightNums);
         break;
       case "-":
@@ -128,5 +144,23 @@ function equal() {
     }
     leftNums = resultDisplay.textContent;
     operatorState = false;
+    decimalState = false;
+    secondDecimalState = false;
   }
 }
+
+document.querySelector("#decimal").addEventListener("click", () => {
+  if (decimalState == false && secondDecimalState == false) {
+    leftNums += ".";
+    updateDisplay(".");
+    decimalState = true;
+  } else if (
+    decimalState == true &&
+    secondDecimalState == false &&
+    operatorState == true
+  ) {
+    rightNums += ".";
+    updateDisplay(".");
+    secondDecimalState = true;
+  }
+});
