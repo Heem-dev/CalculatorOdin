@@ -24,7 +24,12 @@ document.querySelector(".delAll").addEventListener("click", () => {
 });
 document.querySelector(".del").addEventListener("click", () => {
   let arry = resultDisplay.textContent.split("");
-
+  if (arry.at(-1) == opText) {
+    operatorState = false;
+    arry.pop();
+  } else {
+    arry.pop();
+  }
   resultDisplay.textContent = arry.join("");
 });
 function add(a, b) {
@@ -40,10 +45,14 @@ function minus(a, b) {
 }
 
 function divide(a, b) {
+  a = parseFloat(a);
+  b = parseFloat(b);
   return a / b;
 }
 
 function multiply(a, b) {
+  a = parseFloat(a);
+  b = parseFloat(b);
   return a * b;
 }
 
@@ -70,6 +79,7 @@ function operatorClicked(e) {
     leftNums = resultDisplay.textContent;
     if (opText == "×") {
       operator = "*";
+      console.log("**");
     }
     if (opText == "÷") {
       operator = "/";
